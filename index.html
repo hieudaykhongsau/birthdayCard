@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bạn có lời chúc sinh nhật đặc biệt</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            animation: shimmer 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%);
+            }
+
+            50% {
+                transform: translateX(0) translateY(0);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%);
+            }
+        }
+
+        .notification-header {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            margin: -40px -40px 30px -40px;
+            padding: 20px;
+            color: #4a154b;
+            font-weight: bold;
+            font-size: 18px;
+            position: relative;
+        }
+
+        .birthday-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .view-now {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .view-now:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .message-content {
+            display: none;
+            text-align: left;
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .message-content p {
+            margin-bottom: 15px;
+        }
+
+        .birthday-question {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .button-group {
+            display: none;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .response-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .no-btn {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+        }
+
+        .no-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(244, 67, 54, 0.3);
+        }
+
+        .message-input-section {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .message-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .final-message {
+            display: none;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .celebration {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: celebrate 1s infinite;
+        }
+
+        @keyframes celebrate {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            animation: confetti-fall 3s infinite;
+        }
+
+        .confetti:nth-child(2n) {
+            background: #4CAF50;
+        }
+
+        .confetti:nth-child(3n) {
+            background: #2196F3;
+        }
+
+        .confetti:nth-child(4n) {
+            background: #FF9800;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="notification-header">
+            🎂 Bạn có lời chúc sinh nhật đặc biệt
+        </div>
+
+        <div class="birthday-icon">🎉</div>
+
+        <button class="view-now" onclick="showMessage()">Xem ngay</button>
+
+        <div class="message-content" id="messageContent">
+            <p>Chúc mừng sinh nhật cậu! 🎈</p>
+            <p>Đầu tiên, tớ muốn gửi đến cậu những lời chúc tốt đẹp nhất.</p>
+            <p>Hôm nay là một ngày đặc biệt, là ngày của cậu!</p>
+            <p>Tớ hy vọng rằng tuổi mới sẽ mang đến cho cậu nhiều niềm vui, hạnh phúc và thành công.</p>
+
+            <div class="birthday-question">
+                Cậu sẵn sàng để nhận món quà sinh nhật từ tớ chưa? 🎁
+            </div>
+        </div>
+
+        <div class="button-group" id="buttonGroup">
+            <button class="response-btn yes-btn" onclick="showYesResponse()">Sẵn sàng!</button>
+            <button class="response-btn no-btn" onclick="showNoResponse()">Chưa đâu</button>
+        </div>
+
+        <div class="message-input-section" id="messageInputSection">
+            <p style="margin-bottom: 15px; font-weight: bold; color: #ff6b6b;">
+                Tuyệt vời! Viết lời cậu muốn nói vào đây:
+            </p>
+            <textarea class="message-input" placeholder="Cảm ơn bạn vì lời chúc sinh nhật tuyệt vời..."></textarea>
+            <button class="send-btn" onclick="showFinalMessage()">Gửi lời cảm ơn</button>
+        </div>
+
+        <div class="final-message" id="finalMessage">
+            <div class="celebration">🎊🎉🎂🎈</div>
+            <h2 style="color: #ff6b6b; margin-bottom: 15px;">Chúc mừng sinh nhật!</h2>
+            <p style="font-size: 18px; line-height: 1.6;">
+                Cảm ơn cậu đã chia sẻ niềm vui này cùng tớ!<br>
+                Chúc cậu một tuổi mới thật nhiều niềm vui và hạnh phúc! 🌟
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let noClickCount = 0;
+
+        function showMessage() {
+            document.querySelector('.view-now').style.display = 'none';
+            document.querySelector('.birthday-icon').style.display = 'none';
+            document.getElementById('messageContent').style.display = 'block';
+            document.getElementById('buttonGroup').style.display = 'flex';
+        }
+
+        function showYesResponse() {
+            document.getElementById('buttonGroup').style.display = 'none';
+            document.getElementById('messageInputSection').style.display = 'block';
+        }
+
+        function showNoResponse() {
+            noClickCount++;
+            const noBtn = document.querySelector('.no-btn');
+
+            if (noClickCount === 1) {
+                noBtn.textContent = 'Thật sự à?';
+                noBtn.style.transform = 'translateX(' + (Math.random() * 100 - 50) + 'px)';
+            } else if (noClickCount === 2) {
+                noBtn.textContent = 'Cậu chắc chưa?';
+                noBtn.style.transform = 'translateX(' + (Math.random() * 100 - 50) + 'px)';
+            } else if (noClickCount === 3) {
+                noBtn.textContent = 'Tớ biết cậu muốn rồi!';
+                noBtn.style.transform = 'translateX(' + (Math.random() * 100 - 50) + 'px)';
+            } else {
+                showYesResponse();
+            }
+        }
+
+        function showFinalMessage() {
+            document.getElementById('messageInputSection').style.display = 'none';
+            document.getElementById('finalMessage').style.display = 'block';
+            createConfetti();
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+
+</html>
